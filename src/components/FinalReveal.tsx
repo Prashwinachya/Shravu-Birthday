@@ -17,8 +17,7 @@ interface Props {
 const FinalReveal: React.FC<Props> = ({ photos, name }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hearts, setHearts] = useState<{ id: number; left: number; duration: number; size: number }[]>([]);
-  const [sparkleCount, setSparkleCount] = useState(0);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const autoPlayRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   // Trigger celebration confetti
   const triggerConfetti = () => {
@@ -66,7 +65,7 @@ const FinalReveal: React.FC<Props> = ({ photos, name }) => {
 
     const duration = 8 * 1000;
     const animationEnd = Date.now() + duration;
-    const interval: any = setInterval(function() {
+    const interval: any = setInterval(function () {
       const timeLeft = animationEnd - Date.now();
       if (timeLeft <= 0) return clearInterval(interval);
       confetti({
@@ -194,7 +193,7 @@ const FinalReveal: React.FC<Props> = ({ photos, name }) => {
                 alt={currentPhoto.title}
                 className="w-full h-full object-cover select-none"
               />
-              
+
               {/* Subtle gradient overlay for captions */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
 
@@ -245,11 +244,10 @@ const FinalReveal: React.FC<Props> = ({ photos, name }) => {
               <button
                 key={photo.url}
                 onClick={() => handleManualNav(idx)}
-                className={`group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer ${
-                  isActive
+                className={`group relative rounded-xl overflow-hidden transition-all duration-300 cursor-pointer ${isActive
                     ? 'ring-2 ring-pink-400 scale-105 shadow-[0_0_15px_rgba(244,114,182,0.6)]'
                     : 'opacity-60 hover:opacity-100 ring-1 ring-white/20'
-                }`}
+                  }`}
                 style={{ width: '70px', height: '85px' }}
                 aria-label={`View photo ${idx + 1}`}
               >
@@ -275,17 +273,25 @@ const FinalReveal: React.FC<Props> = ({ photos, name }) => {
         className="relative z-10 max-w-2xl w-full mx-auto"
       >
         <div className="backdrop-blur-xl bg-white/[0.07] p-8 md:p-10 rounded-3xl border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.4)] text-left relative overflow-hidden">
-          <div className="flex items-center gap-2 text-pink-400 font-semibold text-lg mb-4">
+          <div className="flex items-center gap-2 text-pink-400 font-semibold text-lg md:text-xl mb-5">
             <Heart className="w-5 h-5 fill-pink-400" />
-            <span>To Rishitha, A Wonderful Friend</span>
+            <span>Happy Birthday, Rishitha! 🎂❤️✨</span>
           </div>
 
           <p className="text-gray-200 text-base md:text-lg leading-relaxed font-light mb-4">
-            Wishing you the happiest and most magical birthday! 🥳✨ From navigating the chaos of college classes and assignments to all the candid laughs, food sessions, and spontaneous chats — having you as a friend makes everyday memories so much brighter.
+            Wishing you a very happy birthday and a wonderful year ahead! May this new year of your life bring you lots of happiness, success, peace, and countless beautiful moments. Keep smiling, keep enjoying the little things, and always stay the amazing person you are.
           </p>
 
-          <p className="text-gray-200 text-base md:text-lg leading-relaxed font-light mb-6">
-            May this upcoming year be packed with incredible achievements, good health, boundless joy, and everything you’ve been working towards. Never stop shining, laughing, and enjoying every single moment!
+          <p className="text-gray-200 text-base md:text-lg leading-relaxed font-light mb-4">
+            I hope you get everything you wish for and that every day ahead gives you another reason to smile. May your dreams turn into reality, your hard work bring you success, and your life always be surrounded by good people and good vibes.
+          </p>
+
+          <p className="text-gray-200 text-base md:text-lg leading-relaxed font-light mb-5">
+            Have a beautiful birthday and an even more beautiful year ahead! 🥳🎉✨
+          </p>
+
+          <p className="text-pink-300 font-medium text-base md:text-lg mb-6">
+            Once again, Happy Birthday! ❤️
           </p>
 
           <div className="pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
@@ -299,7 +305,6 @@ const FinalReveal: React.FC<Props> = ({ photos, name }) => {
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 triggerConfetti();
-                setSparkleCount(prev => prev + 1);
               }}
               className="px-5 py-2.5 rounded-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-medium text-sm shadow-md hover:from-pink-600 hover:to-rose-600 transition-all flex items-center gap-2 cursor-pointer"
             >
