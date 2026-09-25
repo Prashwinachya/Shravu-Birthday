@@ -1,32 +1,33 @@
-# React + TypeScript + Vite
+# Pavan's Birthday Celebration 🎂👑⚡
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An interactive, ultra-sleek, modern web application built for **Pavan's Birthday**!
 
-Currently, two official plugins are available:
+## ✨ Key Features
+- **VIP Surprise Entrance Gate**: Interactive entrance experience with sound effects and party chimes.
+- **Spotlight Memories Gallery**: High-definition photo showcase with custom captions, like counts, and lightbox view.
+- **Blow-the-Candles Interactive Cake**: SVG birthday cake with glowing flames, wind sound FX, fireworks, and wish submission.
+- **Celebration Toasts & Live Wall**: Heartfelt birthday messages, dynamic toast generator, and live interactive message board.
+- **Balloon Pop Arcade Game**: Mini time-trial game with popping sound FX, high-score tracking, and celebratory rewards.
+- **Theme Vibe Switcher**: Toggle between Gold Luxe, Cyber Neon, and Midnight Cosmic themes.
+- **Background Music Player**: Floating audio widget with animated spectrum equalizer.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🛠️ Built With
+- **React 19** + **TypeScript**
+- **Vite**
+- **Tailwind CSS v4**
+- **Framer Motion**
+- **Canvas Confetti**
+- **Lucide React**
 
-## React Compiler
+## 🚀 Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+# Install dependencies
+npm install
 
-## Expanding the Oxlint configuration
+# Run dev server
+npm run dev
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+# Build for production
+npm run build
 ```
-
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
