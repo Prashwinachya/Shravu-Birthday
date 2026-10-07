@@ -57,7 +57,7 @@ const IntroGate: React.FC<Props> = ({ onUnlock }) => {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs sm:text-sm font-medium tracking-wide mb-5"
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-          <span>A Special Birthday Celebration</span>
+          <span>From Your Lovely Brother Prashwin</span>
           <Heart className="w-3.5 h-3.5 text-rose-300 fill-rose-300/60" />
         </motion.div>
 
