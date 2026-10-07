@@ -23,7 +23,7 @@ const SHRAVYA_PHOTOS: PhotoData[] = [
   },
   {
     id: 'photo-2',
-    url: '/photos/IMG_8783.PNG',
+    url: '/photos/IMG_8783.png',
     title: 'Joy & Serenity 🌸',
     badge: 'Timeless Moments',
     description: 'Moments of genuine happiness, peaceful smiles, and cherished memories that illuminate every room.',
@@ -31,7 +31,7 @@ const SHRAVYA_PHOTOS: PhotoData[] = [
   },
   {
     id: 'photo-3',
-    url: '/photos/IMG_8784.PNG',
+    url: '/photos/IMG_8784.png',
     title: 'Poise & Charm 💫',
     badge: 'Golden Radiance',
     description: 'Exuding confidence, quiet strength, and an inspiring dedication to your noble journey in medicine.',
