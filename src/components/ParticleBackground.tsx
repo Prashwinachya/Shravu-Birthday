@@ -8,27 +8,30 @@ interface Particle {
   size: number;
   duration: number;
   delay: number;
-  color: string;
+  opacity: number;
   symbol: string;
 }
 
-const SYMBOLS = ['✨', '⭐', '🎈', '🎉', '👑', '⚡'];
-const COLORS = ['text-amber-400', 'text-yellow-300', 'text-cyan-400', 'text-purple-400', 'text-pink-400'];
+const SYMBOLS = ['✨', '🌸', '💫', '✦', '🌷', '✧', '🤍', '✨'];
 
 const createInitialParticles = (): Particle[] => {
-  return Array.from({ length: 30 }).map((_, i) => ({
+  return Array.from({ length: 24 }).map((_, i) => ({
     id: i,
-    x: Math.random() * 100,
-    xOffset: Math.random() * 8 - 4,
-    size: Math.random() * 18 + 12,
-    duration: Math.random() * 12 + 10,
-    delay: Math.random() * 5,
-    color: COLORS[Math.floor(Math.random() * COLORS.length)],
+    x: Math.random() * 96 + 2,
+    xOffset: Math.random() * 12 - 6,
+    size: Math.random() * 14 + 10,
+    duration: Math.random() * 12 + 14,
+    delay: Math.random() * 6,
+    opacity: Math.random() * 0.4 + 0.3,
     symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
   }));
 };
 
-const ParticleBackground: React.FC<{ theme?: string }> = ({ theme = 'gold' }) => {
+interface Props {
+  theme?: string;
+}
+
+const ParticleBackground: React.FC<Props> = ({ theme = 'rose' }) => {
   const [particles] = useState<Particle[]>(createInitialParticles);
 
   return (
@@ -36,28 +39,38 @@ const ParticleBackground: React.FC<{ theme?: string }> = ({ theme = 'gold' }) =>
       {/* Dynamic ambient background mesh depending on theme */}
       <div
         className={`absolute inset-0 transition-all duration-1000 ${
-          theme === 'cyber'
-            ? 'bg-gradient-to-b from-slate-950 via-purple-950/60 to-cyan-950/40'
-            : theme === 'cosmic'
-            ? 'bg-gradient-to-b from-gray-950 via-indigo-950/70 to-slate-950'
-            : 'bg-gradient-to-b from-gray-950 via-amber-950/30 to-slate-950'
+          theme === 'lavender'
+            ? 'bg-gradient-to-b from-[#0d0a1a] via-[#1b122c] to-[#090711]'
+            : theme === 'champagne'
+            ? 'bg-gradient-to-b from-[#120e09] via-[#221812] to-[#0b0807]'
+            : 'bg-gradient-to-b from-[#110a15] via-[#1d1022] to-[#0b0813]'
         }`}
       />
 
-      {/* Radial Ambient Glows */}
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none animate-pulse-glow" />
-      <div className="absolute top-1/3 -left-20 w-[450px] h-[450px] bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 -right-20 w-[500px] h-[500px] bg-purple-500/10 rounded-full blur-[130px] pointer-events-none" />
+      {/* Soft Radial Ambient Glows */}
+      <div
+        className={`absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full blur-[160px] pointer-events-none transition-colors duration-1000 ${
+          theme === 'lavender'
+            ? 'bg-purple-500/10'
+            : theme === 'champagne'
+            ? 'bg-amber-400/10'
+            : 'bg-rose-400/12'
+        }`}
+      />
+      <div className="absolute top-1/3 -left-24 w-[500px] h-[500px] bg-pink-400/8 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-20 -right-24 w-[550px] h-[550px] bg-purple-400/8 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute top-2/3 left-1/3 w-[400px] h-[400px] bg-amber-300/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Floating Animated Symbols */}
+      {/* Floating Animated Petals & Stardust */}
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          initial={{ y: '105vh', opacity: 0, scale: 0.4 }}
+          initial={{ y: '105vh', opacity: 0, scale: 0.5, rotate: 0 }}
           animate={{
             y: '-10vh',
-            opacity: [0, 0.7, 0.9, 0],
-            scale: [0.4, 1, 1.1, 0.7],
+            opacity: [0, p.opacity, p.opacity * 0.9, 0],
+            scale: [0.5, 1, 1.1, 0.6],
+            rotate: [0, 45, 90, 180],
             x: [`${p.x}%`, `${p.x + p.xOffset}%`]
           }}
           transition={{
@@ -66,7 +79,7 @@ const ParticleBackground: React.FC<{ theme?: string }> = ({ theme = 'gold' }) =>
             delay: p.delay,
             ease: 'linear'
           }}
-          className={`absolute ${p.color} drop-shadow-[0_0_12px_rgba(245,158,11,0.5)]`}
+          className="absolute select-none text-rose-200/70 drop-shadow-[0_0_8px_rgba(244,114,182,0.4)]"
           style={{ left: `${p.x}%`, fontSize: `${p.size}px` }}
         >
           {p.symbol}
@@ -77,3 +90,4 @@ const ParticleBackground: React.FC<{ theme?: string }> = ({ theme = 'gold' }) =>
 };
 
 export default ParticleBackground;
+

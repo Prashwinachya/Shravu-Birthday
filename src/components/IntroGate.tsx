@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Sparkles, Crown, Zap } from 'lucide-react';
+import { Sparkles, Heart } from 'lucide-react';
+import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
 interface Props {
@@ -10,74 +11,92 @@ interface Props {
 const IntroGate: React.FC<Props> = ({ onUnlock }) => {
   const handleClick = () => {
     sounds.playFanfare();
+
+    // Soft elegant pastel confetti burst on entry
+    confetti({
+      particleCount: 80,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ['#FBCFE8', '#FDE68A', '#E9D5FF', '#FFF1F2', '#F472B6']
+    });
+
     onUnlock();
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/90 backdrop-blur-2xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-[#0b0813]/90 backdrop-blur-3xl overflow-hidden">
+      {/* Background Soft Glows */}
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[550px] h-[550px] bg-rose-400/10 rounded-full blur-[140px] pointer-events-none animate-pulse-luminous" />
+      <div className="absolute -bottom-20 right-1/4 w-[400px] h-[400px] bg-purple-400/10 rounded-full blur-[120px] pointer-events-none" />
+
       <motion.div
-        initial={{ opacity: 0, scale: 0.88, y: 20 }}
+        initial={{ opacity: 0, scale: 0.92, y: 25 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
-        exit={{ opacity: 0, scale: 0.95, y: -40 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="glass-panel-gold max-w-xl w-full p-8 sm:p-12 rounded-3xl text-center relative overflow-hidden shadow-[0_0_80px_rgba(245,158,11,0.25)] border border-amber-500/30"
+        exit={{ opacity: 0, scale: 0.95, y: -30, transition: { duration: 0.6 } }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="glass-champagne max-w-xl w-full p-8 sm:p-12 rounded-3xl text-center relative overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border border-rose-200/20"
       >
-        {/* Shimmer overlay */}
-        <div className="absolute inset-0 shimmer-effect pointer-events-none" />
+        {/* Subtle shimmer banner */}
+        <div className="absolute inset-0 shimmer-elegance pointer-events-none" />
 
-        {/* Crown Icon Badge */}
+        {/* Delicate Sparkle Icon Aura */}
         <motion.div
-          initial={{ scale: 0, rotate: -20 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-          className="w-20 h-20 sm:w-24 sm:h-24 mx-auto mb-6 rounded-3xl bg-gradient-to-tr from-amber-500 via-amber-400 to-yellow-200 flex items-center justify-center shadow-[0_0_35px_rgba(245,158,11,0.6)] text-slate-950"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: 'spring', stiffness: 180, damping: 15, delay: 0.2 }}
+          className="w-18 h-18 sm:w-20 sm:h-20 mx-auto mb-6 rounded-3xl bg-gradient-to-tr from-rose-200/20 via-pink-300/30 to-amber-200/25 flex items-center justify-center border border-rose-200/40 shadow-[0_0_30px_rgba(244,114,182,0.25)] text-rose-200"
         >
-          <Crown className="w-10 h-10 sm:w-12 sm:h-12 animate-pulse" />
+          <Sparkles className="w-9 h-9 sm:w-10 sm:h-10 text-rose-200 animate-spin" style={{ animationDuration: '9s' }} />
         </motion.div>
 
-        {/* VIP Access Badge */}
+        {/* Dedicated Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-400/30 text-amber-300 text-xs sm:text-sm font-semibold tracking-wider uppercase mb-4"
+          transition={{ delay: 0.35 }}
+          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs sm:text-sm font-medium tracking-wide mb-5"
         >
-          <Sparkles className="w-4 h-4 text-amber-400 animate-spin" style={{ animationDuration: '4s' }} />
-          <span>Exclusive Birthday Surprise for PAVAN</span>
-          <Zap className="w-4 h-4 text-amber-400" />
+          <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+          <span>A Special Birthday Celebration</span>
+          <Heart className="w-3.5 h-3.5 text-rose-300 fill-rose-300/60" />
         </motion.div>
 
+        {/* Heading */}
         <motion.h1
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 text-white font-heading"
+          transition={{ delay: 0.45 }}
+          className="text-3xl sm:text-5xl font-bold tracking-tight mb-5 text-white font-serif-luxury leading-tight"
         >
-          ARE YOU READY FOR THE <br />
-          <span className="text-gradient-gold">MAIN EVENT? 👑⚡</span>
+          Happy Birthday, <br />
+          <span className="text-gradient-rose-gold drop-shadow-[0_0_30px_rgba(244,114,182,0.3)]">
+            Dr. Shravya ✨
+          </span>
         </motion.h1>
 
+        {/* Supporting Line */}
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="text-slate-300 text-sm sm:text-base mb-8 max-w-md mx-auto font-light leading-relaxed"
+          transition={{ delay: 0.6 }}
+          className="text-rose-100/90 text-sm sm:text-base mb-9 max-w-md mx-auto font-light leading-relaxed italic"
         >
-          Get ready to celebrate <strong className="text-amber-300 font-semibold">PAVAN</strong> with custom photos, interactive birthday cake, toasts, games & music!
+          &ldquo;Today isn&apos;t just another day.
+          It&apos;s a celebration of someone who makes the world a little brighter simply by being in it.&rdquo;
         </motion.p>
 
-        {/* Enter Celebration Button */}
+        {/* Begin Journey CTA Button */}
         <motion.button
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9 }}
-          whileHover={{ scale: 1.06, boxShadow: '0 0 35px rgba(245,158,11,0.7)' }}
-          whileTap={{ scale: 0.95 }}
+          transition={{ delay: 0.75 }}
+          whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(244,114,182,0.45)' }}
+          whileTap={{ scale: 0.96 }}
           onClick={handleClick}
-          className="w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-amber-500 via-amber-400 to-yellow-300 text-slate-950 font-extrabold text-lg sm:text-xl rounded-2xl shadow-[0_10px_30px_rgba(245,158,11,0.4)] hover:from-amber-400 hover:to-yellow-200 transition-all cursor-pointer flex items-center justify-center gap-3 mx-auto"
+          className="w-full sm:w-auto px-9 py-4 bg-gradient-to-r from-rose-300 via-pink-400 to-amber-200 text-[#1f0b18] font-semibold text-base sm:text-lg rounded-full shadow-[0_10px_30px_rgba(244,114,182,0.35)] transition-all cursor-pointer flex items-center justify-center gap-3 mx-auto"
         >
-          <Sparkles className="w-6 h-6 text-slate-950 fill-slate-950" />
-          <span>ENTER PAVAN&apos;S CELEBRATION 🎉</span>
+          <Sparkles className="w-5 h-5 text-[#1f0b18]" />
+          <span>Begin Your Birthday Journey ✨</span>
         </motion.button>
       </motion.div>
     </div>
@@ -85,3 +104,4 @@ const IntroGate: React.FC<Props> = ({ onUnlock }) => {
 };
 
 export default IntroGate;
+

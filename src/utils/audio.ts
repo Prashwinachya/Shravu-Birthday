@@ -1,4 +1,4 @@
-// Web Audio API synthesizer for rich UI sound effects without requiring external sound files
+// Web Audio API synthesizer for soft, melodic and magical birthday audio experiences
 
 class SoundManager {
   private ctx: AudioContext | null = null;
@@ -17,7 +17,7 @@ class SoundManager {
     return this.ctx;
   }
 
-  // Play button click sound
+  // Play soft crystal bell click
   playClick() {
     try {
       const ctx = this.getContext();
@@ -25,50 +25,51 @@ class SoundManager {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.08);
-      gain.gain.setValueAtTime(0.15, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+      osc.frequency.setValueAtTime(880, ctx.currentTime); // A5
+      osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.1);
+      gain.gain.setValueAtTime(0.1, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.12);
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
-      osc.stop(ctx.currentTime + 0.08);
+      osc.stop(ctx.currentTime + 0.12);
     } catch {
       // Ignore audio context errors
     }
   }
 
-  // Play fanfare / cheer chime sound
+  // Play enchanting celesta / harp fanfare
   playFanfare() {
     try {
       const ctx = this.getContext();
       if (!ctx) return;
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+      // Beautiful harmonic chord arpeggio: C5, E5, G5, B5, D6, G6
+      const notes = [523.25, 659.25, 783.99, 987.77, 1174.66, 1567.98];
       notes.forEach((freq, idx) => {
         const osc = ctx.createOscillator();
         const gain = ctx.createGain();
-        osc.type = 'triangle';
+        osc.type = 'sine';
         osc.frequency.value = freq;
-        const startTime = ctx.currentTime + idx * 0.1;
-        gain.gain.setValueAtTime(0.2, startTime);
-        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.3);
+        const startTime = ctx.currentTime + idx * 0.08;
+        gain.gain.setValueAtTime(0.15, startTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.45);
         osc.connect(gain);
         gain.connect(ctx.destination);
         osc.start(startTime);
-        osc.stop(startTime + 0.3);
+        osc.stop(startTime + 0.45);
       });
     } catch {
       // Ignore audio context errors
     }
   }
 
-  // Play candle blow wind & chime sound
+  // Play candle blow wind with a magical chime
   playBlowCandles() {
     try {
       const ctx = this.getContext();
       if (!ctx) return;
-      // White noise for wind blow
-      const bufferSize = ctx.sampleRate * 0.5;
+      // Soft gentle wind breeze
+      const bufferSize = ctx.sampleRate * 0.6;
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++) {
@@ -78,26 +79,26 @@ class SoundManager {
       noise.buffer = buffer;
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(800, ctx.currentTime);
-      filter.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.5);
+      filter.frequency.setValueAtTime(600, ctx.currentTime);
+      filter.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.55);
 
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+      gain.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.55);
 
       noise.connect(filter);
       filter.connect(gain);
       gain.connect(ctx.destination);
       noise.start();
 
-      // Followed by celebratory chime
-      setTimeout(() => this.playFanfare(), 300);
+      // Followed by sweet magical bell chime
+      setTimeout(() => this.playFanfare(), 320);
     } catch {
       // Ignore audio context errors
     }
   }
 
-  // Play game balloon pop sound
+  // Play delicate sparkle / star catch chime
   playPop() {
     try {
       const ctx = this.getContext();
@@ -105,14 +106,14 @@ class SoundManager {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(800, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(150, ctx.currentTime + 0.1);
-      gain.gain.setValueAtTime(0.3, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
+      osc.frequency.setValueAtTime(1046.50, ctx.currentTime); // C6
+      osc.frequency.exponentialRampToValueAtTime(1567.98, ctx.currentTime + 0.12);
+      gain.gain.setValueAtTime(0.12, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start();
-      osc.stop(ctx.currentTime + 0.1);
+      osc.stop(ctx.currentTime + 0.15);
     } catch {
       // Ignore audio context errors
     }

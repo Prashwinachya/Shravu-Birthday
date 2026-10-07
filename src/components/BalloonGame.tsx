@@ -1,175 +1,184 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gamepad2, Trophy, RotateCcw, Sparkles } from 'lucide-react';
+import { Star, Sparkles, RotateCcw } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { sounds } from '../utils/audio';
 
-interface Balloon {
+interface StarWish {
   id: number;
   x: number;
   speed: number;
   color: string;
   size: number;
-  points: number;
+  title: string;
+  message: string;
+  symbol: string;
 }
 
-const BALLOON_COLORS = [
-  'bg-amber-500 shadow-amber-500/50',
-  'bg-cyan-500 shadow-cyan-500/50',
-  'bg-purple-500 shadow-purple-500/50',
-  'bg-rose-500 shadow-rose-500/50',
-  'bg-emerald-500 shadow-emerald-500/50'
+const BLESSINGS_POOL = [
+  { title: 'Radiant Peace 🌸', message: 'May your days be calm, serene, and filled with quiet beauty.', symbol: '🌸' },
+  { title: 'Golden Milestones 🩺', message: 'May your noble medical journey reach new heights of success and impact.', symbol: '✨' },
+  { title: 'Pure Joy & Laughter 💫', message: 'May your heart always be light and your smile ever genuine.', symbol: '💫' },
+  { title: 'Deep Gratitude 🕊️', message: 'Thank you for bringing so much kindness and light into the world.', symbol: '🌷' },
+  { title: 'Lifelong Health & Vitality 🤍', message: 'Wishing you abundant wellness, energy, and inner peace.', symbol: '🤍' },
+  { title: 'Dreams Realized 🌟', message: 'May every aspiration you hold close to your heart unfold effortlessly.', symbol: '🌟' }
+];
+
+const STAR_STYLES = [
+  'bg-gradient-to-tr from-rose-400/80 to-pink-300/90 shadow-[0_0_20px_rgba(244,114,182,0.6)] border border-rose-200/50',
+  'bg-gradient-to-tr from-amber-300/80 to-yellow-200/90 shadow-[0_0_20px_rgba(251,191,36,0.6)] border border-amber-100/50',
+  'bg-gradient-to-tr from-purple-400/80 to-indigo-300/90 shadow-[0_0_20px_rgba(192,132,252,0.6)] border border-purple-200/50',
+  'bg-gradient-to-tr from-pink-300/80 to-rose-200/90 shadow-[0_0_20px_rgba(251,113,133,0.6)] border border-pink-100/50'
 ];
 
 const BalloonGame: React.FC = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [score, setScore] = useState(0);
-  const [highScore, setHighScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(20);
-  const [balloons, setBalloons] = useState<Balloon[]>([]);
+  const [stars, setStars] = useState<StarWish[]>([]);
+  const [unlockedBlessings, setUnlockedBlessings] = useState<string[]>([]);
+  const [currentRevealed, setCurrentRevealed] = useState<{ title: string; message: string } | null>(null);
 
-  // Start mini-game
-  const startGame = () => {
-    sounds.playFanfare();
-    setIsPlaying(true);
-    setScore(0);
-    setTimeLeft(20);
-    setBalloons([]);
-  };
-
-  // Timer countdown loop
+  // Spawn floating stars loop
   useEffect(() => {
-    if (!isPlaying) return;
-
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          sounds.playFanfare();
-          confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-          setIsPlaying(false);
-          setHighScore((currentHigh) => Math.max(currentHigh, score));
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [isPlaying, score]);
-
-  // Spawn balloons loop
-  useEffect(() => {
-    if (!isPlaying) return;
-
     const spawner = setInterval(() => {
-      setBalloons((prev) => {
-        if (prev.length > 12) return prev;
-        const newBalloon: Balloon = {
+      setStars((prev) => {
+        if (prev.length > 8) return prev;
+        const blessing = BLESSINGS_POOL[Math.floor(Math.random() * BLESSINGS_POOL.length)];
+        const newStar: StarWish = {
           id: Date.now() + Math.random(),
-          x: Math.random() * 85 + 5,
-          speed: 3 + Math.random() * 4,
-          color: BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)],
-          size: 45 + Math.random() * 25,
-          points: 10
+          x: Math.random() * 80 + 10,
+          speed: 7 + Math.random() * 5,
+          color: STAR_STYLES[Math.floor(Math.random() * STAR_STYLES.length)],
+          size: 48 + Math.random() * 14,
+          title: blessing.title,
+          message: blessing.message,
+          symbol: blessing.symbol
         };
-        return [...prev, newBalloon].slice(-15);
+        return [...prev, newStar].slice(-10);
       });
-    }, 700);
+    }, 1200);
 
     return () => clearInterval(spawner);
-  }, [isPlaying]);
+  }, []);
 
-  // Pop a balloon
-  const popBalloon = (id: number, points: number) => {
+  // Catch a star
+  const catchStar = (star: StarWish) => {
     sounds.playPop();
-    setScore((prev) => prev + points);
-    setBalloons((prev) => prev.filter((b) => b.id !== id));
+
+    if (!unlockedBlessings.includes(star.title)) {
+      setUnlockedBlessings(prev => [...prev, star.title]);
+      if (unlockedBlessings.length + 1 >= BLESSINGS_POOL.length) {
+        sounds.playFanfare();
+        confetti({
+          particleCount: 100,
+          spread: 75,
+          origin: { y: 0.6 },
+          colors: ['#FBCFE8', '#FDE68A', '#E9D5FF']
+        });
+      }
+    }
+
+    setCurrentRevealed({ title: star.title, message: star.message });
+    setStars(prev => prev.filter(s => s.id !== star.id));
+  };
+
+  const resetConstellation = () => {
+    sounds.playClick();
+    setUnlockedBlessings([]);
+    setCurrentRevealed(null);
   };
 
   return (
-    <section id="game" className="relative z-10 py-12 px-4 max-w-4xl mx-auto">
-      <div className="glass-panel p-6 sm:p-10 rounded-3xl border border-cyan-500/30 shadow-[0_20px_50px_rgba(6,182,212,0.15)] relative overflow-hidden">
+    <section id="lanterns" className="relative z-10 py-14 px-4 max-w-4xl mx-auto">
+      <div className="glass-pearl p-6 sm:p-10 rounded-3xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
         {/* Header */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-cyan-500/10 text-cyan-300 text-xs font-semibold uppercase tracking-wider mb-2">
-            <Gamepad2 className="w-4 h-4 text-cyan-400" />
-            <span>PAVAN&apos;S BIRTHDAY ARCADE</span>
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs font-semibold uppercase tracking-wider mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-amber-200" />
+            <span>INTERACTIVE STAR JAR</span>
+            <Star className="w-3.5 h-3.5 text-rose-300" />
           </div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight font-heading">
-            BALLOON POP <span className="text-gradient-cyan">CHALLENGE 🎈</span>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight font-serif-luxury">
+            Constellation of <span className="text-gradient-rose-gold">Wishes ✨</span>
           </h2>
-          <p className="text-slate-300 text-sm mt-1 font-light">
-            Pop as many party balloons as you can before the time runs out!
+          <p className="text-rose-100/75 text-sm sm:text-base mt-2 max-w-md mx-auto font-light">
+            Tap any floating wish star to catch a special birthday blessing for Dr. Shravya.
           </p>
         </div>
 
-        {/* Game Stats Bar */}
-        <div className="flex items-center justify-around bg-slate-900/80 p-4 rounded-2xl border border-slate-700/60 mb-6 max-w-md mx-auto">
-          <div className="text-center">
-            <span className="text-xs text-slate-400 uppercase font-semibold">Time</span>
-            <p className={`text-2xl font-extrabold ${timeLeft <= 5 && isPlaying ? 'text-rose-400 animate-pulse' : 'text-cyan-400'}`}>
-              {timeLeft}s
-            </p>
+        {/* Collection Tracker Bar */}
+        <div className="flex items-center justify-between bg-[#0b0813]/80 p-4 rounded-2xl border border-white/10 mb-6 max-w-md mx-auto">
+          <div className="flex items-center gap-2 text-rose-200 text-xs sm:text-sm font-medium">
+            <Star className="w-4 h-4 text-amber-200 fill-amber-200" />
+            <span>Blessings Collected:</span>
+            <span className="font-bold text-white font-serif-luxury text-base">
+              {unlockedBlessings.length} / {BLESSINGS_POOL.length}
+            </span>
           </div>
-          <div className="h-8 w-px bg-slate-700" />
-          <div className="text-center">
-            <span className="text-xs text-slate-400 uppercase font-semibold">Score</span>
-            <p className="text-2xl font-extrabold text-amber-400">{score}</p>
-          </div>
-          <div className="h-8 w-px bg-slate-700" />
-          <div className="text-center">
-            <span className="text-xs text-slate-400 uppercase font-semibold">High Score</span>
-            <p className="text-2xl font-extrabold text-purple-400">{highScore}</p>
-          </div>
+
+          {unlockedBlessings.length > 0 && (
+            <button
+              onClick={resetConstellation}
+              className="text-xs text-rose-200/70 hover:text-white flex items-center gap-1 cursor-pointer transition-colors"
+            >
+              <RotateCcw className="w-3 h-3" />
+              <span>Reset</span>
+            </button>
+          )}
         </div>
 
-        {/* Game Screen Canvas Box */}
-        <div className="relative w-full h-[360px] bg-slate-950/80 rounded-2xl border border-slate-800 overflow-hidden shadow-inner flex flex-col items-center justify-center">
-          {!isPlaying && (
-            <div className="text-center p-6 z-20">
-              <Trophy className="w-12 h-12 text-amber-400 mx-auto mb-3 animate-bounce" />
-              <h3 className="text-2xl font-bold text-white mb-2">
-                {score > 0 ? `Final Score: ${score} Points! 🎉` : 'Ready to Pop Balloons?'}
-              </h3>
-              <p className="text-slate-400 text-sm mb-6 max-w-xs mx-auto">
-                {score > 0
-                  ? 'Great score! Can you beat your high score?'
-                  : 'Tap the start button to begin the 20-second party popping spree!'}
-              </p>
-              <button
-                onClick={startGame}
-                className="px-8 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-500 text-slate-950 font-extrabold text-base rounded-2xl shadow-lg hover:from-cyan-400 transition-all cursor-pointer flex items-center gap-2 mx-auto"
-              >
-                {score > 0 ? <RotateCcw className="w-5 h-5" /> : <Sparkles className="w-5 h-5" />}
-                <span>{score > 0 ? 'PLAY AGAIN 🔄' : 'START GAME 🎈'}</span>
-              </button>
-            </div>
-          )}
+        {/* Sky View Canvas */}
+        <div className="relative w-full h-[360px] bg-gradient-to-b from-[#090610] via-[#130d22] to-[#0d0918] rounded-2xl border border-white/10 overflow-hidden shadow-inner flex flex-col items-center justify-center">
+          {/* Subtle celestial stars background dots */}
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent pointer-events-none" />
 
-          {/* Floating Balloons during gameplay */}
-          {isPlaying && (
-            <AnimatePresence>
-              {balloons.map((b) => (
-                <motion.button
-                  key={b.id}
-                  initial={{ y: '360px', opacity: 1, scale: 0.8 }}
-                  animate={{ y: '-60px' }}
-                  exit={{ scale: 1.5, opacity: 0 }}
-                  transition={{ duration: b.speed, ease: 'linear' }}
-                  onClick={() => popBalloon(b.id, b.points)}
-                  className={`absolute rounded-full shadow-lg ${b.color} cursor-pointer flex items-center justify-center text-white text-xs font-bold transition-transform active:scale-125 select-none`}
-                  style={{
-                    left: `${b.x}%`,
-                    width: `${b.size}px`,
-                    height: `${b.size * 1.25}px`,
-                    borderRadius: '50% 50% 50% 50% / 40% 40% 60% 60%'
-                  }}
-                >
-                  🎈
-                </motion.button>
-              ))}
-            </AnimatePresence>
+          {/* Current Revealed Blessing Overlay Card */}
+          <AnimatePresence>
+            {currentRevealed && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                className="z-20 p-6 max-w-sm w-full mx-4 rounded-2xl bg-[#0f0a1c]/90 backdrop-blur-md border border-rose-200/30 text-center shadow-[0_10px_35px_rgba(0,0,0,0.6)]"
+              >
+                <div className="w-9 h-9 rounded-full bg-rose-500/20 text-rose-200 flex items-center justify-center mx-auto mb-2">
+                  <Sparkles className="w-4 h-4 text-amber-200" />
+                </div>
+                <h3 className="text-lg font-bold text-white font-serif-luxury mb-1">
+                  {currentRevealed.title}
+                </h3>
+                <p className="text-rose-100/80 text-xs sm:text-sm font-light leading-relaxed">
+                  {currentRevealed.message}
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Floating Stars */}
+          <AnimatePresence>
+            {stars.map((s) => (
+              <motion.button
+                key={s.id}
+                initial={{ y: '360px', opacity: 0, scale: 0.6 }}
+                animate={{ y: '-60px', opacity: [0, 0.9, 0.9, 0], scale: [0.6, 1, 1, 0.8] }}
+                exit={{ scale: 1.4, opacity: 0 }}
+                transition={{ duration: s.speed, ease: 'linear' }}
+                onClick={() => catchStar(s)}
+                className={`absolute rounded-full ${s.color} cursor-pointer flex items-center justify-center text-white text-base font-bold transition-transform active:scale-125 select-none hover:scale-110`}
+                style={{
+                  left: `${s.x}%`,
+                  width: `${s.size}px`,
+                  height: `${s.size}px`
+                }}
+                title={s.title}
+              >
+                <span>{s.symbol}</span>
+              </motion.button>
+            ))}
+          </AnimatePresence>
+
+          {!currentRevealed && (
+            <p className="absolute bottom-4 text-xs text-rose-200/50 pointer-events-none font-light">
+              Tap any star as it drifts across the sky ✨
+            </p>
           )}
         </div>
       </div>
@@ -178,3 +187,4 @@ const BalloonGame: React.FC = () => {
 };
 
 export default BalloonGame;
+

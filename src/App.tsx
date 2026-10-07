@@ -13,14 +13,14 @@ import MusicPlayer from './components/MusicPlayer';
 function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [activeTab, setActiveTab] = useState('hero');
-  const [theme, setTheme] = useState('gold');
+  const [theme, setTheme] = useState('rose');
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden selection:bg-amber-400 selection:text-slate-950 font-sans">
+    <div className="min-h-screen relative overflow-x-hidden selection:bg-rose-300 selection:text-[#2d0f1f] font-sans">
       {/* Particle & Ambient background mesh */}
       <ParticleBackground theme={theme} />
 
-      {/* Intro VIP Gate Screen */}
+      {/* Opening Intro Gate Screen */}
       <AnimatePresence>
         {!isUnlocked && (
           <IntroGate key="intro" onUnlock={() => setIsUnlocked(true)} />
@@ -37,7 +37,7 @@ function App() {
             setTheme={setTheme}
           />
 
-          <main className="space-y-12 flex-grow">
+          <main className="space-y-16 flex-grow">
             <HeroSection />
             <PhotoGallery />
             <InteractiveCake />
@@ -45,13 +45,13 @@ function App() {
             <BalloonGame />
           </main>
 
-          {/* Footer Branding */}
-          <footer className="mt-16 pt-8 pb-6 text-center border-t border-slate-800/60 max-w-4xl mx-auto w-full px-4">
-            <p className="text-slate-400 text-xs sm:text-sm font-light">
-              Crafted with ❤️ for <span className="text-amber-400 font-semibold">PAVAN&apos;S BIRTHDAY CELEBRATION 🎂</span>
+          {/* Footer */}
+          <footer className="mt-16 pt-8 pb-8 text-center border-t border-white/10 max-w-4xl mx-auto w-full px-4">
+            <p className="text-rose-200/90 text-sm sm:text-base font-serif-luxury font-medium tracking-wide">
+              Crafted with ❤️ by <span className="text-gradient-champagne font-semibold">Prashwin</span> for <span className="text-gradient-rose-gold font-semibold">Shravya ✨🌸</span>
             </p>
-            <p className="text-slate-500 text-[11px] mt-1">
-              Cheers to health, prosperity, happiness & endless success!
+            <p className="text-rose-200/50 text-[11px] sm:text-xs mt-1 font-light">
+              Wishing you a year filled with endless smiles, peace of mind, radiant health & fulfilled dreams.
             </p>
           </footer>
         </div>
@@ -64,3 +64,4 @@ function App() {
 }
 
 export default App;
+
