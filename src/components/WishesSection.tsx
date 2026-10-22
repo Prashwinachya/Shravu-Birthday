@@ -14,33 +14,33 @@ interface WishMessage {
 const INITIAL_WISHES: WishMessage[] = [
   {
     id: 'w-1',
-    name: 'With Endless Admiration 🌸',
-    message: 'Happy Birthday Dr. Shravya! Your compassion, intellect, and grace inspire everyone fortunate enough to know you. May your path ahead be radiant!',
+    name: 'Prashwin',
+    message: 'Happy Birthday Shravu Akka! Always proud to see you doing so well as a doctor. Have a great day!',
     time: 'Just now',
-    emoji: '✨'
+    emoji: '🎂'
   },
   {
     id: 'w-2',
-    name: 'Friends & Well-Wishers 💫',
-    message: 'Wishing you a magnificent birthday Dr. Shravya! May you achieve every goal in medicine, travel to places that inspire you, and smile every single day!',
+    name: 'Friends & Family',
+    message: 'Wishing you a very happy birthday, Dr. Shravya! Hope you have a wonderful year full of happiness and success.',
     time: '10m ago',
-    emoji: '🌸'
+    emoji: '🎉'
   },
   {
     id: 'w-3',
-    name: 'Healing & Light 🕊️',
-    message: 'Happy Birthday! The care and kindness you bring to the world comes back to you multiplied a hundredfold in health, joy, and peace.',
+    name: 'Well-Wishers',
+    message: 'Happy Birthday! Wishing you good health, peace of mind, and success in everything you do.',
     time: '25m ago',
-    emoji: '🌷'
+    emoji: '⭐'
   }
 ];
 
 const INSPIRING_BLESSINGS = [
-  '🌸 "May your year be as gentle as your heart, as bright as your mind, and as beautiful as your soul."',
-  '✨ "To Dr. Shravya: May you heal countless lives while finding time to nourish your own joy and dreams."',
-  '💫 "Here’s to another chapter of quiet triumphs, laughter with loved ones, and inner peace."',
-  '🌷 "May every door you knock on open with golden opportunities and every step bring you closer to your deepest aspirations."',
-  '🕊️ "Happy Birthday Dr. Shravya! May this special year grant you clarity, happiness, and unforgettable adventures."'
+  '"Wishing you peaceful shifts, good rest, and plenty of time to recharge."',
+  '"To Dr. Shravya: Proud of the doctor you are and the wonderful person you\'ve always been."',
+  '"Here’s to another year of good health, happy family moments, and well-earned success."',
+  '"May this year bring you all the success you work so hard for, along with lots of peace of mind."',
+  '"Happy Birthday, Shravu Akka! Wishing you all the happiness and warmth you give to everyone around you."'
 ];
 
 const WishesSection: React.FC = () => {
@@ -81,11 +81,11 @@ const WishesSection: React.FC = () => {
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs font-semibold uppercase tracking-wider mb-3">
           <Feather className="w-3.5 h-3.5 text-amber-200" />
-          <span>FROM THE HEART</span>
+          <span>A NOTE FOR YOU</span>
           <Heart className="w-3.5 h-3.5 text-rose-300 fill-rose-300/60" />
         </div>
         <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-serif-luxury">
-          A Birthday Letter for <span className="text-gradient-rose-gold">Dr. Shravya Acharya 💌</span>
+          A Birthday Note for <span className="text-gradient-rose-gold">Shravu Akka</span>
         </h2>
       </div>
 
@@ -98,33 +98,32 @@ const WishesSection: React.FC = () => {
       >
         <div className="flex items-center gap-3 text-rose-200 font-bold text-xl sm:text-2xl mb-8 font-serif-luxury">
           <Quote className="w-8 h-8 text-amber-200 opacity-90" />
-          <span>Dear Dr. Shravya,</span>
+          <span>Dear Shravu Akka,</span>
         </div>
 
         <p className="text-rose-100/90 text-base sm:text-lg leading-relaxed font-light mb-5 font-sans">
-          On this very special day, I want to take a moment to celebrate everything that makes you who you are.
-          Your dedication, your quiet strength, your gentle empathy, and the sincere warmth you bring to the people around you are rare and truly beautiful gifts.
+          You might be Eeva&apos;s sister, but over the years, you&apos;ve always felt like my own sister. I&apos;ve always had so much respect for how down-to-earth, kind, and welcoming you are with everyone around you.
         </p>
 
         <p className="text-rose-100/90 text-base sm:text-lg leading-relaxed font-light mb-5 font-sans">
-          The path you have chosen in medicine is a reflection of your generous spirit and your passion for making a meaningful difference in the world. Even on the busiest and most challenging days, your kindness and steady grace stand out as an inspiration.
+          Seeing you work so hard on your journey as a doctor is something we all look up to. Between the endless studying, long shifts, and everything medicine demands, you handle it with so much patience and genuine care for people. You make all of us really proud.
         </p>
 
         <p className="text-rose-100/90 text-base sm:text-lg leading-relaxed font-light mb-5 font-sans">
-          As you step into this brand new chapter of your life, I wish you boundless happiness, peace of mind, fulfilling achievements, and time to enjoy every little joy that life offers. May your heart always remain as bright and compassionate as it is today.
+          On your birthday, I hope you get time to slow down, take a breather, and celebrate how far you&apos;ve come. Wishing you good health, genuine peace of mind, and all the happiness in the world in the year ahead.
         </p>
 
-        <p className="text-rose-200 text-base sm:text-lg leading-relaxed font-medium mb-3 font-serif-luxury italic">
-          Happy Birthday, Shravu Akka! Wishing you a day as wonderfully special, peaceful, and radiant as you are. ✨🌸🎂
+        <p className="text-rose-200 text-base sm:text-lg leading-relaxed font-medium mb-3 font-serif-luxury">
+          Happy Birthday, Shravu Akka! Hope you have a wonderful day ahead.
         </p>
-        <p className="text-amber-200 text-sm font-serif-luxury italic mb-8">
-          — With all the best wishes, Prashwin ✨
+        <p className="text-amber-200 text-sm font-serif-luxury mb-8">
+          — Prashwin
         </p>
 
         <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-2 text-rose-200 text-sm font-serif-luxury italic">
+          <div className="flex items-center gap-2 text-rose-200 text-sm font-serif-luxury">
             <Sparkles className="w-4 h-4 text-amber-200" />
-            <span>Celebrating you, today & always</span>
+            <span>Always wishing the best for you</span>
           </div>
 
           {/* Random Toast Generator Button */}
@@ -133,12 +132,12 @@ const WishesSection: React.FC = () => {
             className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/15 text-rose-200 text-xs sm:text-sm font-medium border border-rose-200/25 transition-all cursor-pointer"
           >
             <RefreshCw className="w-3.5 h-3.5 text-amber-200" />
-            <span>New Birthday Blessing 🌸</span>
+            <span>Show another wish</span>
           </button>
         </div>
 
         {/* Display Random Toast */}
-        <div className="mt-5 p-4 rounded-2xl bg-[#0b0813]/60 border border-rose-200/20 text-rose-200 text-sm font-light italic leading-relaxed">
+        <div className="mt-5 p-4 rounded-2xl bg-[#0b0813]/60 border border-rose-200/20 text-rose-200 text-sm font-light leading-relaxed">
           {INSPIRING_BLESSINGS[toastIndex]}
         </div>
       </motion.div>
@@ -149,7 +148,7 @@ const WishesSection: React.FC = () => {
         <div className="glass-pearl p-6 sm:p-8 rounded-3xl border border-white/15 lg:col-span-1 h-fit">
           <div className="flex items-center gap-2 text-rose-200 font-semibold text-lg mb-4 font-serif-luxury">
             <Heart className="w-4 h-4 text-rose-300 fill-rose-300/60" />
-            <span>Leave a Birthday Blessing</span>
+            <span>Leave a Birthday Message</span>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -161,7 +160,7 @@ const WishesSection: React.FC = () => {
                 type="text"
                 value={authorName}
                 onChange={(e) => setAuthorName(e.target.value)}
-                placeholder="e.g. Well-wisher / Friend"
+                placeholder="e.g. Prashwin / Friend"
                 className="w-full px-4 py-2.5 rounded-xl bg-[#0b0813]/80 border border-white/15 text-white placeholder-rose-200/40 focus:outline-none focus:border-rose-300 text-sm"
                 required
               />
@@ -169,13 +168,13 @@ const WishesSection: React.FC = () => {
 
             <div>
               <label className="block text-xs font-medium text-rose-200/70 uppercase tracking-wider mb-1">
-                Your Message for Dr. Shravya
+                Your Message for Shravu Akka
               </label>
               <textarea
                 value={userMsg}
                 onChange={(e) => setUserMsg(e.target.value)}
                 rows={4}
-                placeholder="Write your heartfelt birthday wishes..."
+                placeholder="Write a birthday wish..."
                 className="w-full px-4 py-2.5 rounded-xl bg-[#0b0813]/80 border border-white/15 text-white placeholder-rose-200/40 focus:outline-none focus:border-rose-300 text-sm resize-none"
                 required
               />
@@ -186,12 +185,12 @@ const WishesSection: React.FC = () => {
               className="w-full py-3 rounded-full bg-gradient-to-r from-rose-300 via-pink-400 to-amber-200 text-[#1f0b18] font-semibold text-sm shadow-md hover:opacity-95 transition-all cursor-pointer flex items-center justify-center gap-2"
             >
               <Send className="w-4 h-4" />
-              <span>Post Birthday Blessing 💌</span>
+              <span>Post Message</span>
             </button>
 
             {postedSuccess && (
               <p className="text-xs text-rose-200 text-center font-medium animate-bounce mt-2">
-                ✨ Your message has been added to Dr. Shravya&apos;s wall!
+                Your message has been posted!
               </p>
             )}
           </form>
@@ -201,10 +200,10 @@ const WishesSection: React.FC = () => {
         <div className="lg:col-span-2 space-y-4">
           <div className="flex items-center justify-between mb-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-rose-200/70">
-              Blessings & Messages ({wishes.length})
+              Messages ({wishes.length})
             </span>
             <span className="text-xs text-rose-200/80 font-medium flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-amber-200" /> Wall of Love & Respect
+              <Sparkles className="w-3.5 h-3.5 text-amber-200" /> Birthday Wall
             </span>
           </div>
 

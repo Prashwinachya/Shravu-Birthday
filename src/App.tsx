@@ -48,10 +48,10 @@ function App() {
           {/* Footer */}
           <footer className="mt-16 pt-8 pb-8 text-center border-t border-white/10 max-w-4xl mx-auto w-full px-4">
             <p className="text-rose-200/90 text-sm sm:text-base font-serif-luxury font-medium tracking-wide">
-              Crafted with ❤️ by your lovely brother <span className="text-gradient-champagne font-semibold">Prashwin</span> for <span className="text-gradient-rose-gold font-semibold">Shravu Akka ✨🌸</span>
+              Made with love by <span className="text-gradient-champagne font-semibold">Prashwin</span> for <span className="text-gradient-rose-gold font-semibold">Shravu Akka</span>
             </p>
             <p className="text-rose-200/50 text-[11px] sm:text-xs mt-1 font-light">
-              Wishing you a year filled with endless smiles, peace of mind, radiant health & fulfilled dreams.
+              Wishing you good health, genuine happiness, and all the success in the world this year.
             </p>
           </footer>
         </div>

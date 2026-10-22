@@ -57,7 +57,7 @@ const IntroGate: React.FC<Props> = ({ onUnlock }) => {
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs sm:text-sm font-medium tracking-wide mb-5"
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-          <span>From Your Lovely Brother Prashwin</span>
+          <span>A little birthday surprise from Prashwin</span>
           <Heart className="w-3.5 h-3.5 text-rose-300 fill-rose-300/60" />
         </motion.div>
 
@@ -70,7 +70,7 @@ const IntroGate: React.FC<Props> = ({ onUnlock }) => {
         >
           Happy Birthday, <br />
           <span className="text-gradient-rose-gold drop-shadow-[0_0_30px_rgba(244,114,182,0.3)]">
-            Dr. Shravya ✨
+            Dr. Shravya
           </span>
         </motion.h1>
 
@@ -81,8 +81,7 @@ const IntroGate: React.FC<Props> = ({ onUnlock }) => {
           transition={{ delay: 0.6 }}
           className="text-rose-100/90 text-sm sm:text-base mb-9 max-w-md mx-auto font-light leading-relaxed italic"
         >
-          &ldquo;Today isn&apos;t just another day.
-          It&apos;s a celebration of someone who makes the world a little brighter simply by being in it.&rdquo;
+          &ldquo;You might be Eeva&apos;s sister, but you&apos;ve always felt like family to me. Wishing you the happiest birthday, Shravu Akka.&rdquo;
         </motion.p>
 
         {/* Begin Journey CTA Button */}
@@ -96,7 +95,7 @@ const IntroGate: React.FC<Props> = ({ onUnlock }) => {
           className="w-full sm:w-auto px-9 py-4 bg-gradient-to-r from-rose-300 via-pink-400 to-amber-200 text-[#1f0b18] font-semibold text-base sm:text-lg rounded-full shadow-[0_10px_30px_rgba(244,114,182,0.35)] transition-all cursor-pointer flex items-center justify-center gap-3 mx-auto"
         >
           <Sparkles className="w-5 h-5 text-[#1f0b18]" />
-          <span>Begin Your Birthday Journey ✨</span>
+          <span>Open your surprise</span>
         </motion.button>
       </motion.div>
     </div>

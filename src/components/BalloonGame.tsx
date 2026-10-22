@@ -20,8 +20,8 @@ interface BlessingItem {
 const CELESTIAL_BLESSINGS: BlessingItem[] = [
   {
     id: 'b-1',
-    title: 'Radiant Peace 🌸',
-    message: 'May your days be calm, serene, and filled with quiet beauty and genuine joy.',
+    title: 'Peace of Mind',
+    message: 'Hoping this year gives you calm days, good rest, and plenty of time for yourself outside of work.',
     symbol: '🌸',
     color: 'from-pink-400 via-rose-300 to-amber-200',
     glowColor: 'rgba(244,114,182,0.5)',
@@ -32,8 +32,8 @@ const CELESTIAL_BLESSINGS: BlessingItem[] = [
   },
   {
     id: 'b-2',
-    title: 'Golden Milestones 🩺',
-    message: 'May your noble medical journey reach extraordinary heights of success, wisdom, and healing impact.',
+    title: 'Dr. Shravya',
+    message: 'Medicine isn’t easy, but seeing how sincerely and hard you work makes all of us so proud of you.',
     symbol: '🩺',
     color: 'from-amber-300 via-yellow-200 to-rose-300',
     glowColor: 'rgba(251,191,36,0.5)',
@@ -44,9 +44,9 @@ const CELESTIAL_BLESSINGS: BlessingItem[] = [
   },
   {
     id: 'b-3',
-    title: 'Pure Joy & Laughter 💫',
-    message: 'May your heart always be light, surrounded by true friends and endless cheerful moments.',
-    symbol: '💫',
+    title: 'Laughter & Joy',
+    message: 'Wishing you days full of genuine laughter, good conversations, and lighthearted moments.',
+    symbol: '✨',
     color: 'from-purple-300 via-pink-300 to-rose-200',
     glowColor: 'rgba(192,132,252,0.5)',
     top: '20%',
@@ -56,8 +56,8 @@ const CELESTIAL_BLESSINGS: BlessingItem[] = [
   },
   {
     id: 'b-4',
-    title: 'Gentle Grace 🌷',
-    message: 'Thank you for your empathy, warmth, and the effortless kindness you share with the world.',
+    title: 'Sisterly Bond',
+    message: 'Thank you for always being so kind and treating me just like your own brother.',
     symbol: '🌷',
     color: 'from-rose-300 via-pink-400 to-purple-300',
     glowColor: 'rgba(251,113,133,0.5)',
@@ -68,8 +68,8 @@ const CELESTIAL_BLESSINGS: BlessingItem[] = [
   },
   {
     id: 'b-5',
-    title: 'Health & Vitality 🤍',
-    message: 'Wishing you abundant wellness, energy, peaceful mornings, and lifelong inner harmony.',
+    title: 'Health & Rest',
+    message: 'Between busy shifts and late hours, please remember to take good care of your own health too.',
     symbol: '🤍',
     color: 'from-amber-200 via-rose-200 to-pink-300',
     glowColor: 'rgba(253,230,138,0.5)',
@@ -80,8 +80,8 @@ const CELESTIAL_BLESSINGS: BlessingItem[] = [
   },
   {
     id: 'b-6',
-    title: 'Dreams Realized 🌟',
-    message: 'May every aspiration you hold close to your heart unfold into beautiful realities.',
+    title: 'Future Milestones',
+    message: 'May every goal you’ve set for your career and life turn out even better than you planned.',
     symbol: '🌟',
     color: 'from-yellow-300 via-amber-200 to-rose-200',
     glowColor: 'rgba(252,211,77,0.5)',
@@ -130,14 +130,14 @@ const BalloonGame: React.FC = () => {
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs font-semibold uppercase tracking-wider mb-2">
             <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-            <span>INTERACTIVE STAR JAR</span>
+            <span>WISHES JAR</span>
             <Star className="w-3.5 h-3.5 text-rose-300" />
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight font-serif-luxury">
-            Constellation of <span className="text-gradient-rose-gold">Wishes ✨</span>
+            Jar of <span className="text-gradient-rose-gold">Wishes</span>
           </h2>
           <p className="text-rose-100/75 text-sm sm:text-base mt-2 max-w-md mx-auto font-light">
-            Tap the floating celestial stars to reveal special birthday blessings for Dr. Shravya.
+            Tap the floating stars to open little birthday wishes.
           </p>
         </div>
 
@@ -145,7 +145,7 @@ const BalloonGame: React.FC = () => {
         <div className="flex items-center justify-between bg-[#0b0813]/80 px-5 py-3.5 rounded-2xl border border-white/10 mb-6 max-w-md mx-auto">
           <div className="flex items-center gap-2 text-rose-200 text-xs sm:text-sm font-medium">
             <Star className="w-4 h-4 text-amber-200 fill-amber-200" />
-            <span>Blessings Collected:</span>
+            <span>Wishes Opened:</span>
             <span className="font-bold text-white font-serif-luxury text-base">
               {collectedIds.length} / {CELESTIAL_BLESSINGS.length}
             </span>
@@ -242,7 +242,7 @@ const BalloonGame: React.FC = () => {
                   onClick={() => setActiveBlessing(null)}
                   className="px-5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-rose-200 text-xs font-medium border border-rose-200/30 transition-all cursor-pointer"
                 >
-                  Keep in Star Jar ✨
+                  Close
                 </button>
               </motion.div>
             )}
@@ -250,7 +250,7 @@ const BalloonGame: React.FC = () => {
 
           {!activeBlessing && (
             <p className="absolute bottom-3 text-xs text-rose-200/60 pointer-events-none font-light bg-[#0b0813]/60 px-4 py-1 rounded-full border border-white/5 backdrop-blur-sm">
-              Tap any star to unfold its birthday blessing ✨
+              Tap any star to read a wish
             </p>
           )}
         </div>

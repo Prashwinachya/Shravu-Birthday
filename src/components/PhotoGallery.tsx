@@ -16,33 +16,33 @@ const SHRAVYA_PHOTOS: PhotoData[] = [
   {
     id: 'photo-1',
     url: '/photos/IMG_8770.jpg',
-    title: 'Radiant Elegance ✨',
-    badge: 'Portrait of Grace',
-    description: 'Capturing your warmth, kind presence, and the effortless brilliance you carry wherever you go.',
+    title: 'Dr. Shravya',
+    badge: 'Always Smiling',
+    description: 'Carrying yourself with calm confidence, warmth, and an easy smile.',
     likes: 142
   },
   {
     id: 'photo-2',
     url: '/photos/IMG_8783.png',
-    title: 'Joy & Serenity 🌸',
-    badge: 'Timeless Moments',
-    description: 'Moments of genuine happiness, peaceful smiles, and cherished memories that illuminate every room.',
+    title: 'Good Times',
+    badge: 'Happy Moments',
+    description: 'Always bringing lighthearted energy and positive vibes wherever you are.',
     likes: 168
   },
   {
     id: 'photo-3',
     url: '/photos/IMG_8784.png',
-    title: 'Poise & Charm 💫',
-    badge: 'Golden Radiance',
-    description: 'Exuding confidence, quiet strength, and an inspiring dedication to your noble journey in medicine.',
+    title: 'Dedication',
+    badge: 'Life in Medicine',
+    description: 'Balancing demanding medical duties with patience and a caring heart.',
     likes: 155
   },
   {
     id: 'photo-4',
     url: '/photos/d522d4fd-693f-4d67-a99a-78839a244129.JPG',
-    title: 'Cherished Memories 🌟',
-    badge: 'Beautiful Journey',
-    description: 'Every chapter holds stories of growth, kindness, and unforgettable milestones made richer by you.',
+    title: 'Making Us Proud',
+    badge: 'Milestones',
+    description: 'Celebrating all the hard work behind you and the bright road still ahead.',
     likes: 173
   }
 ];
@@ -100,14 +100,14 @@ const PhotoGallery: React.FC = () => {
       <div className="text-center mb-12">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs font-semibold uppercase tracking-wider mb-3">
           <Sparkles className="w-3.5 h-3.5 text-amber-200" />
-          <span>PORTRAIT GALLERY & MOMENTS</span>
+          <span>PHOTOS & MOMENTS</span>
           <Heart className="w-3.5 h-3.5 text-rose-300 fill-rose-300/60" />
         </div>
         <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-serif-luxury">
-          Memories & <span className="text-gradient-rose-gold">Moments 📸🌸</span>
+          Memories & <span className="text-gradient-rose-gold">Moments 📸</span>
         </h2>
         <p className="text-rose-100/70 text-sm sm:text-base mt-2 max-w-lg mx-auto font-light">
-          A collection celebrating your wonderful spirit. Tap any memory to view in high resolution or leave a heart!
+          A few pictures celebrating you today. Tap on any photo to view or leave a heart.
         </p>
       </div>
 
@@ -264,7 +264,7 @@ const PhotoGallery: React.FC = () => {
                           likedMap[selectedPhoto.id] ? 'fill-white text-white' : 'text-rose-300'
                         }`}
                       />
-                      <span>{selectedPhoto.likes} Hearts for Dr. Shravya</span>
+                      <span>{selectedPhoto.likes} Hearts</span>
                     </button>
                   </div>
                 </div>

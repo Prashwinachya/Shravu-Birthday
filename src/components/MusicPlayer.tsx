@@ -65,7 +65,7 @@ const MusicPlayer: React.FC = () => {
       >
         <Music className={`w-4 h-4 ${isPlaying ? 'animate-bounce text-rose-300' : 'text-rose-200/60'}`} />
         <span className="text-xs font-semibold tracking-wider uppercase hidden xs:inline">
-          {isPlaying ? 'MELODY' : 'PLAY MUSIC'}
+          {isPlaying ? 'PAUSE MUSIC' : 'PLAY MUSIC'}
         </span>
         <div className="w-6 h-6 rounded-full bg-rose-500/20 flex items-center justify-center ml-1">
           {isPlaying ? <Pause className="w-3.5 h-3.5 text-rose-200" /> : <Play className="w-3.5 h-3.5 text-rose-200 ml-0.5" />}

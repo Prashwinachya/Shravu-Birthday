@@ -11,12 +11,12 @@ interface Props {
 
 const NavigationHeader: React.FC<Props> = ({ activeTab, setActiveTab, theme, setTheme }) => {
   const tabs = [
-    { id: 'hero', label: 'Celebration', icon: Sparkles },
-    { id: 'photos', label: 'Memories', icon: Image },
+    { id: 'hero', label: 'Home', icon: Sparkles },
+    { id: 'photos', label: 'Photos', icon: Image },
     { id: 'cake', label: 'Cake & Wish', icon: Flame },
     { id: 'letter', label: 'Letter', icon: Mail },
-    { id: 'wishes', label: 'Blessings Wall', icon: HeartHandshake },
-    { id: 'lanterns', label: 'Star Jar', icon: Star },
+    { id: 'wishes', label: 'Messages', icon: HeartHandshake },
+    { id: 'lanterns', label: 'Wishes Jar', icon: Star },
   ];
 
   const cycleTheme = () => {
@@ -44,7 +44,7 @@ const NavigationHeader: React.FC<Props> = ({ activeTab, setActiveTab, theme, set
             ✨
           </div>
           <span className="font-serif-luxury font-semibold text-white text-base tracking-wide hidden sm:inline">
-            Dr. Shravya <span className="text-rose-300 font-sans text-xs">✨</span>
+            Dr. Shravya
           </span>
         </div>
 

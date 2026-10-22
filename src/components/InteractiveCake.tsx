@@ -42,16 +42,16 @@ const InteractiveCake: React.FC = () => {
         <div className="mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-rose-200/25 text-rose-200 text-xs font-semibold uppercase tracking-wider mb-3">
             <Flame className="w-3.5 h-3.5 text-amber-300" />
-            <span>BIRTHDAY CANDLE CEREMONY</span>
+            <span>BIRTHDAY CAKE & WISH</span>
             <Sparkles className="w-3.5 h-3.5 text-rose-300" />
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight font-serif-luxury">
-            Make a Wish & <span className="text-gradient-rose-gold">Blow the Candles 🎂✨</span>
+            Make a Wish & <span className="text-gradient-rose-gold">Blow Out the Candles 🎂</span>
           </h2>
           <p className="text-rose-100/80 text-sm sm:text-base mt-2 font-light max-w-md mx-auto">
             {candlesBlown
-              ? '✨ The candles are blown! May all your heartfelt wishes and dreams blossom into reality.'
-              : 'Close your eyes, make a meaningful wish, and gently blow out the candles.'}
+              ? 'The candles are out! Hoping whatever you wished for comes true this year.'
+              : 'Take a second, make a wish, and blow out the candles.'}
           </p>
         </div>
 
@@ -154,7 +154,7 @@ const InteractiveCake: React.FC = () => {
               className="px-8 py-3.5 bg-gradient-to-r from-rose-300 via-pink-400 to-amber-200 text-[#1f0b18] font-semibold text-base sm:text-lg rounded-full shadow-[0_10px_25px_rgba(244,114,182,0.3)] transition-all cursor-pointer flex items-center gap-2.5"
             >
               <Flame className="w-5 h-5 text-[#1f0b18]" />
-              <span>Blow Out Candles 💨</span>
+              <span>Blow out candles</span>
             </motion.button>
           ) : (
             <motion.button
@@ -164,7 +164,7 @@ const InteractiveCake: React.FC = () => {
               className="px-6 py-3 bg-white/10 hover:bg-white/15 text-rose-200 font-medium text-sm sm:text-base rounded-full border border-rose-200/25 transition-all cursor-pointer flex items-center gap-2"
             >
               <RefreshCw className="w-4 h-4 text-amber-200" />
-              <span>Relight Candles 🕯️</span>
+              <span>Light them again</span>
             </motion.button>
           )}
         </div>
@@ -182,13 +182,13 @@ const InteractiveCake: React.FC = () => {
                 <form onSubmit={handleWishSubmit} className="space-y-3">
                   <div className="flex items-center justify-center gap-2 text-rose-200 text-sm font-medium">
                     <Sparkles className="w-4 h-4 text-amber-200" />
-                    <span>Send a Birthday Blessing for Dr. Shravya</span>
+                    <span>Leave a birthday note for Shravu Akka</span>
                   </div>
                   <input
                     type="text"
                     value={makeWish}
                     onChange={(e) => setMakeWish(e.target.value)}
-                    placeholder="e.g. Wishing you grand success in medicine and boundless joy! 🌸"
+                    placeholder="e.g. Hope you get lots of rest and a great year ahead!"
                     className="w-full px-4 py-3 rounded-2xl bg-[#0b0813]/80 border border-rose-200/30 text-white placeholder-rose-200/40 focus:outline-none focus:ring-2 focus:ring-rose-300 text-sm"
                   />
                   <button
@@ -196,7 +196,7 @@ const InteractiveCake: React.FC = () => {
                     className="w-full py-3 rounded-full bg-gradient-to-r from-rose-300 via-pink-400 to-amber-200 text-[#1f0b18] font-semibold text-sm shadow-md hover:opacity-95 cursor-pointer flex items-center justify-center gap-2"
                   >
                     <Heart className="w-4 h-4 fill-[#1f0b18] text-[#1f0b18]" />
-                    <span>Send Blessing ✨</span>
+                    <span>Save note</span>
                   </button>
                 </form>
               ) : (
@@ -205,8 +205,8 @@ const InteractiveCake: React.FC = () => {
                   animate={{ scale: 1, opacity: 1 }}
                   className="p-4 rounded-2xl bg-white/[0.06] border border-rose-200/30 text-rose-100 text-sm font-light leading-relaxed"
                 >
-                  🌸 Blessing registered for Dr. Shravya:{' '}
-                  <strong className="text-white italic">&quot;{makeWish}&quot;</strong>
+                  Note added:{' '}
+                  <strong className="text-white">&quot;{makeWish}&quot;</strong>
                 </motion.div>
               )}
             </motion.div>
