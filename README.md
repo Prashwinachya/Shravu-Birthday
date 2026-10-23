@@ -1,4 +1,4 @@
-# Pavan's Birthday Celebration 🎂👑⚡
+# Shravu's Birthday Celebration 🎂👑⚡
 
 An interactive, ultra-sleek, modern web application built for **Pavan's Birthday**!
 
