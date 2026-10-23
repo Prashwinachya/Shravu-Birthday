@@ -63,28 +63,38 @@ class SoundManager {
     }
   }
 
-  // Play candle blow wind with a magical chime
-  playBlowCandles() {
-    try {
-      const ctx = this.getContext();
-      if (!ctx) return;
-      // Soft gentle wind breeze
-      const bufferSize = ctx.sampleRate * 0.6;
+  private noiseBuffer: AudioBuffer | null = null;
+
+  private getNoiseBuffer(ctx: AudioContext): AudioBuffer {
+    if (!this.noiseBuffer) {
+      const bufferSize = Math.floor(ctx.sampleRate * 0.5);
       const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
       const data = buffer.getChannelData(0);
       for (let i = 0; i < bufferSize; i++) {
         data[i] = Math.random() * 2 - 1;
       }
+      this.noiseBuffer = buffer;
+    }
+    return this.noiseBuffer;
+  }
+
+  // Play candle blow wind with a magical chime
+  playBlowCandles() {
+    try {
+      const ctx = this.getContext();
+      if (!ctx) return;
+
+      const buffer = this.getNoiseBuffer(ctx);
       const noise = ctx.createBufferSource();
       noise.buffer = buffer;
       const filter = ctx.createBiquadFilter();
       filter.type = 'lowpass';
       filter.frequency.setValueAtTime(600, ctx.currentTime);
-      filter.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.55);
+      filter.frequency.exponentialRampToValueAtTime(80, ctx.currentTime + 0.45);
 
       const gain = ctx.createGain();
-      gain.gain.setValueAtTime(0.2, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.55);
+      gain.gain.setValueAtTime(0.18, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.45);
 
       noise.connect(filter);
       filter.connect(gain);
@@ -92,7 +102,7 @@ class SoundManager {
       noise.start();
 
       // Followed by sweet magical bell chime
-      setTimeout(() => this.playFanfare(), 320);
+      setTimeout(() => this.playFanfare(), 300);
     } catch {
       // Ignore audio context errors
     }

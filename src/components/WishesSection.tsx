@@ -44,7 +44,18 @@ const INSPIRING_BLESSINGS = [
 ];
 
 const WishesSection: React.FC = () => {
-  const [wishes, setWishes] = useState<WishMessage[]>(INITIAL_WISHES);
+  const [wishes, setWishes] = useState<WishMessage[]>(() => {
+    try {
+      const saved = localStorage.getItem('shravu_wishes_board');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {
+      // fallback
+    }
+    return INITIAL_WISHES;
+  });
   const [toastIndex, setToastIndex] = useState(0);
   const [authorName, setAuthorName] = useState('');
   const [userMsg, setUserMsg] = useState('');
@@ -68,7 +79,14 @@ const WishesSection: React.FC = () => {
       emoji: ['🌸', '✨', '💫', '🌷', '🤍'][Math.floor(Math.random() * 5)]
     };
 
-    setWishes([newEntry, ...wishes]);
+    const updated = [newEntry, ...wishes];
+    setWishes(updated);
+    try {
+      localStorage.setItem('shravu_wishes_board', JSON.stringify(updated));
+    } catch {
+      // ignore storage error
+    }
+
     setAuthorName('');
     setUserMsg('');
     setPostedSuccess(true);

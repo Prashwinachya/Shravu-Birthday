@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import ParticleBackground from './components/ParticleBackground';
 import IntroGate from './components/IntroGate';
@@ -14,6 +14,33 @@ function App() {
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [activeTab, setActiveTab] = useState('hero');
   const [theme, setTheme] = useState('rose');
+
+  // Synchronize active tab in navigation header with user scroll position
+  useEffect(() => {
+    if (!isUnlocked) return;
+
+    const sectionIds = ['hero', 'photos', 'cake', 'letter', 'wishes', 'lanterns'];
+    const elements = sectionIds
+      .map(id => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveTab(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-20% 0px -55% 0px',
+        threshold: 0.1
+      }
+    );
+
+    elements.forEach(el => observer.observe(el));
+    return () => observer.disconnect();
+  }, [isUnlocked]);
 
   return (
     <div className="min-h-screen relative overflow-x-hidden selection:bg-rose-300 selection:text-[#2d0f1f] font-sans">

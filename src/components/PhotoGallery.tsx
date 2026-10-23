@@ -50,7 +50,38 @@ const SHRAVYA_PHOTOS: PhotoData[] = [
 const PhotoGallery: React.FC = () => {
   const [photos, setPhotos] = useState<PhotoData[]>(SHRAVYA_PHOTOS);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
-  const [likedMap, setLikedMap] = useState<Record<string, boolean>>({});
+  const [likedMap, setLikedMap] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem('shravu_photo_likes');
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  // Lock body scroll and listen for Escape/Arrow keys when lightbox is open
+  React.useEffect(() => {
+    if (selectedPhotoIndex === null) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setSelectedPhotoIndex(null);
+      } else if (e.key === 'ArrowLeft') {
+        setSelectedPhotoIndex(prev => (prev === null ? null : (prev - 1 + photos.length) % photos.length));
+      } else if (e.key === 'ArrowRight') {
+        setSelectedPhotoIndex(prev => (prev === null ? null : (prev + 1) % photos.length));
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedPhotoIndex, photos.length]);
 
   const handleLike = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -59,6 +90,12 @@ const PhotoGallery: React.FC = () => {
     setLikedMap(prev => {
       const isAlreadyLiked = prev[id];
       const newStatus = !isAlreadyLiked;
+      const updated = { ...prev, [id]: newStatus };
+      try {
+        localStorage.setItem('shravu_photo_likes', JSON.stringify(updated));
+      } catch {
+        // ignore storage errors
+      }
 
       setPhotos(currentPhotos =>
         currentPhotos.map(p => {
@@ -69,7 +106,7 @@ const PhotoGallery: React.FC = () => {
         })
       );
 
-      return { ...prev, [id]: newStatus };
+      return updated;
     });
   };
 

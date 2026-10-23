@@ -111,10 +111,11 @@ const InteractiveCake: React.FC = () => {
                 {!candlesBlown && (
                   <motion.g
                     animate={{
-                      scale: [1, 1.12, 0.96, 1],
+                      scale: [1, 1.15, 0.94, 1],
                       opacity: [0.9, 1, 0.85, 0.9]
                     }}
                     transition={{ repeat: Infinity, duration: 0.5 + candle.id * 0.12 }}
+                    style={{ transformOrigin: `${candle.cx}px ${candle.cy - 48}px` }}
                   >
                     <ellipse cx={candle.cx} cy={candle.cy - 48} rx="6" ry="11" fill="#fbbf24" />
                     <ellipse cx={candle.cx} cy={candle.cy - 46} rx="3.5" ry="7" fill="#fef08a" />
@@ -124,10 +125,12 @@ const InteractiveCake: React.FC = () => {
                 {/* Delicate Smoke particle when blown */}
                 {candlesBlown && (
                   <motion.circle
-                    initial={{ opacity: 0.7, r: 2, cy: candle.cy - 42 }}
-                    animate={{ opacity: 0, r: 10, cy: candle.cy - 70 }}
-                    transition={{ duration: 1.6, repeat: Infinity, repeatDelay: 0.8 }}
                     cx={candle.cx}
+                    cy={candle.cy - 44}
+                    r="4"
+                    initial={{ opacity: 0.7, scale: 0.6, y: 0 }}
+                    animate={{ opacity: 0, scale: 2.6, y: -28 }}
+                    transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 0.4 }}
                     fill="#e2e8f0"
                   />
                 )}

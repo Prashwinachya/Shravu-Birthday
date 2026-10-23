@@ -93,8 +93,25 @@ const CELESTIAL_BLESSINGS: BlessingItem[] = [
 ];
 
 const BalloonGame: React.FC = () => {
-  const [collectedIds, setCollectedIds] = useState<string[]>([]);
+  const [collectedIds, setCollectedIds] = useState<string[]>(() => {
+    try {
+      const saved = localStorage.getItem('shravu_collected_stars');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
   const [activeBlessing, setActiveBlessing] = useState<BlessingItem | null>(null);
+
+  // Close modal with Escape key
+  React.useEffect(() => {
+    if (!activeBlessing) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveBlessing(null);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeBlessing]);
 
   const handleStarClick = (blessing: BlessingItem) => {
     sounds.playPop();
@@ -102,11 +119,16 @@ const BalloonGame: React.FC = () => {
     if (!collectedIds.includes(blessing.id)) {
       const updated = [...collectedIds, blessing.id];
       setCollectedIds(updated);
+      try {
+        localStorage.setItem('shravu_collected_stars', JSON.stringify(updated));
+      } catch {
+        // ignore storage error
+      }
 
       if (updated.length === CELESTIAL_BLESSINGS.length) {
         sounds.playFanfare();
         confetti({
-          particleCount: 140,
+          particleCount: 120,
           spread: 80,
           origin: { y: 0.6 },
           colors: ['#FBCFE8', '#FDE68A', '#E9D5FF', '#FFF1F2']
@@ -120,6 +142,11 @@ const BalloonGame: React.FC = () => {
   const resetConstellation = () => {
     sounds.playClick();
     setCollectedIds([]);
+    try {
+      localStorage.removeItem('shravu_collected_stars');
+    } catch {
+      // ignore
+    }
     setActiveBlessing(null);
   };
 
@@ -224,26 +251,35 @@ const BalloonGame: React.FC = () => {
           <AnimatePresence>
             {activeBlessing && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.85, y: 15 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.85, y: 10 }}
-                className="z-30 p-6 sm:p-7 max-w-sm w-full mx-4 rounded-3xl bg-[#0f0a1c]/95 backdrop-blur-xl border border-rose-200/40 text-center shadow-[0_15px_45px_rgba(0,0,0,0.8)]"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setActiveBlessing(null)}
+                className="absolute inset-0 z-30 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm cursor-pointer"
               >
-                <div className="w-11 h-11 rounded-full bg-rose-500/20 text-rose-200 flex items-center justify-center mx-auto mb-3">
-                  <span className="text-2xl">{activeBlessing.symbol}</span>
-                </div>
-                <h3 className="text-xl font-bold text-white font-serif-luxury mb-2">
-                  {activeBlessing.title}
-                </h3>
-                <p className="text-rose-100/90 text-sm font-light leading-relaxed mb-4">
-                  {activeBlessing.message}
-                </p>
-                <button
-                  onClick={() => setActiveBlessing(null)}
-                  className="px-5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-rose-200 text-xs font-medium border border-rose-200/30 transition-all cursor-pointer"
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.88, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.88, y: 10 }}
+                  onClick={(e) => e.stopPropagation()}
+                  className="p-6 sm:p-7 max-w-sm w-full rounded-3xl bg-[#0f0a1c]/95 backdrop-blur-xl border border-rose-200/40 text-center shadow-[0_15px_45px_rgba(0,0,0,0.8)] cursor-default"
                 >
-                  Close
-                </button>
+                  <div className="w-11 h-11 rounded-full bg-rose-500/20 text-rose-200 flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">{activeBlessing.symbol}</span>
+                  </div>
+                  <h3 className="text-xl font-bold text-white font-serif-luxury mb-2">
+                    {activeBlessing.title}
+                  </h3>
+                  <p className="text-rose-100/90 text-sm font-light leading-relaxed mb-4">
+                    {activeBlessing.message}
+                  </p>
+                  <button
+                    onClick={() => setActiveBlessing(null)}
+                    className="px-5 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-rose-200 text-xs font-medium border border-rose-200/30 transition-all cursor-pointer"
+                  >
+                    Close
+                  </button>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>

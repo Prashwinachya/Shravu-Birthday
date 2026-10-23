@@ -48,10 +48,10 @@ const MusicPlayer: React.FC = () => {
     <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2">
       {/* Equalizer Spectrum Bars (Only visible when playing) */}
       {isPlaying && (
-        <div className="hidden sm:flex items-end gap-1 px-3 py-2.5 rounded-full bg-[#0b0813]/85 backdrop-blur-md border border-rose-200/30">
-          <motion.div animate={{ height: [6, 18, 10, 22, 6] }} transition={{ repeat: Infinity, duration: 0.8 }} className="w-1 bg-rose-300 rounded-full" />
-          <motion.div animate={{ height: [14, 8, 20, 10, 14] }} transition={{ repeat: Infinity, duration: 0.6 }} className="w-1 bg-amber-200 rounded-full" />
-          <motion.div animate={{ height: [8, 22, 12, 18, 8] }} transition={{ repeat: Infinity, duration: 0.7 }} className="w-1 bg-pink-300 rounded-full" />
+        <div className="hidden sm:flex items-end gap-1 px-3 py-2.5 rounded-full bg-[#0b0813]/85 backdrop-blur-md border border-rose-200/30 h-9">
+          <div className="w-1 h-5 bg-rose-300 rounded-full animate-eq-1" />
+          <div className="w-1 h-5 bg-amber-200 rounded-full animate-eq-2" />
+          <div className="w-1 h-5 bg-pink-300 rounded-full animate-eq-3" />
         </div>
       )}
 

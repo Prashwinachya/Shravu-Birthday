@@ -17,26 +17,32 @@
 
   .glass-pearl {
     background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.12);
     box-shadow: 0 16px 40px -10px rgba(0, 0, 0, 0.4), 0 0 30px rgba(244, 114, 182, 0.05);
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .glass-champagne {
     background: linear-gradient(135deg, rgba(254, 243, 199, 0.06), rgba(244, 114, 182, 0.04));
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     border: 1px solid rgba(253, 230, 138, 0.22);
     box-shadow: 0 20px 50px rgba(251, 191, 36, 0.08), 0 0 40px rgba(244, 114, 182, 0.05);
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .glass-rose {
     background: linear-gradient(135deg, rgba(253, 242, 248, 0.06), rgba(238, 242, 255, 0.03));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(244, 114, 182, 0.22);
     box-shadow: 0 16px 40px rgba(244, 114, 182, 0.08);
+    transform: translateZ(0);
+    backface-visibility: hidden;
   }
 
   .text-gradient-rose-gold {
@@ -72,6 +78,45 @@ body {
   background-color: #0b0813;
   color: #f8f5fa;
   overflow-x: hidden;
+}
+
+/* Ensure smooth section navigation with sticky header offset */
+section[id], div[id="wishes"] {
+  scroll-margin-top: 6rem;
+}
+
+/* Equalizer Bars GPU-Accelerated Animation */
+@keyframes eqBar1 {
+  0%, 100% { transform: scaleY(0.25); }
+  50% { transform: scaleY(1); }
+}
+
+@keyframes eqBar2 {
+  0%, 100% { transform: scaleY(0.85); }
+  50% { transform: scaleY(0.3); }
+}
+
+@keyframes eqBar3 {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(0.9); }
+}
+
+.animate-eq-1 {
+  animation: eqBar1 0.8s ease-in-out infinite;
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+.animate-eq-2 {
+  animation: eqBar2 0.65s ease-in-out infinite;
+  transform-origin: bottom;
+  will-change: transform;
+}
+
+.animate-eq-3 {
+  animation: eqBar3 0.75s ease-in-out infinite;
+  transform-origin: bottom;
+  will-change: transform;
 }
 
 /* Custom Soft Scrollbar */

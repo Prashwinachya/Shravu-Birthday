@@ -1,44 +1,30 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-
-interface Particle {
-  id: number;
-  x: number;
-  xOffset: number;
-  size: number;
-  duration: number;
-  delay: number;
-  opacity: number;
-  symbol: string;
-}
-
-const SYMBOLS = ['✨', '🌸', '💫', '✦', '🌷', '✧', '🤍', '✨'];
-
-const createInitialParticles = (): Particle[] => {
-  return Array.from({ length: 24 }).map((_, i) => ({
-    id: i,
-    x: Math.random() * 96 + 2,
-    xOffset: Math.random() * 12 - 6,
-    size: Math.random() * 14 + 10,
-    duration: Math.random() * 12 + 14,
-    delay: Math.random() * 6,
-    opacity: Math.random() * 0.4 + 0.3,
-    symbol: SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]
-  }));
-};
+import React, { useMemo } from 'react';
 
 interface Props {
   theme?: string;
 }
 
+const SYMBOLS = ['✨', '🌸', '💫', '✦', '🌷', '✧', '🤍'];
+
 const ParticleBackground: React.FC<Props> = ({ theme = 'rose' }) => {
-  const [particles] = useState<Particle[]>(createInitialParticles);
+  // Pre-generate a modest, high-performance set of 14 floating particles
+  const particles = useMemo(() => {
+    return Array.from({ length: 14 }).map((_, i) => ({
+      id: i,
+      left: `${(i * 7 + 4) % 94 + 2}%`,
+      size: `${12 + (i % 4) * 3}px`,
+      duration: `${14 + (i % 5) * 3}s`,
+      delay: `${-(i * 2.2)}s`,
+      symbol: SYMBOLS[i % SYMBOLS.length],
+      opacity: 0.35 + (i % 3) * 0.15
+    }));
+  }, []);
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none">
-      {/* Dynamic ambient background mesh depending on theme */}
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden select-none" style={{ contain: 'strict' }}>
+      {/* Base Theme Mesh Gradient */}
       <div
-        className={`absolute inset-0 transition-all duration-1000 ${
+        className={`absolute inset-0 transition-colors duration-700 ${
           theme === 'lavender'
             ? 'bg-gradient-to-b from-[#0d0a1a] via-[#1b122c] to-[#090711]'
             : theme === 'champagne'
@@ -47,47 +33,64 @@ const ParticleBackground: React.FC<Props> = ({ theme = 'rose' }) => {
         }`}
       />
 
-      {/* Soft Radial Ambient Glows */}
+      {/* GPU-efficient Radial Glows (native gradient, zero blur recalculations) */}
       <div
-        className={`absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-full blur-[160px] pointer-events-none transition-colors duration-1000 ${
-          theme === 'lavender'
-            ? 'bg-purple-500/10'
-            : theme === 'champagne'
-            ? 'bg-amber-400/10'
-            : 'bg-rose-400/12'
-        }`}
+        className="absolute inset-0 transition-opacity duration-700 pointer-events-none"
+        style={{
+          background:
+            theme === 'lavender'
+              ? 'radial-gradient(circle 600px at 50% 10%, rgba(192, 132, 252, 0.12), transparent 70%), radial-gradient(circle 450px at 85% 75%, rgba(244, 114, 182, 0.08), transparent 70%)'
+              : theme === 'champagne'
+              ? 'radial-gradient(circle 600px at 50% 10%, rgba(251, 191, 36, 0.12), transparent 70%), radial-gradient(circle 450px at 85% 75%, rgba(245, 158, 11, 0.08), transparent 70%)'
+              : 'radial-gradient(circle 600px at 50% 10%, rgba(244, 114, 182, 0.13), transparent 70%), radial-gradient(circle 450px at 85% 75%, rgba(192, 132, 252, 0.08), transparent 70%), radial-gradient(circle 400px at 15% 45%, rgba(251, 113, 133, 0.06), transparent 70%)'
+        }}
       />
-      <div className="absolute top-1/3 -left-24 w-[500px] h-[500px] bg-pink-400/8 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-20 -right-24 w-[550px] h-[550px] bg-purple-400/8 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute top-2/3 left-1/3 w-[400px] h-[400px] bg-amber-300/5 rounded-full blur-[120px] pointer-events-none" />
 
-      {/* Floating Animated Petals & Stardust */}
+      {/* High-Performance GPU CSS Animated Floating Particles */}
+      <style>{`
+        @keyframes floatUpGPU {
+          0% {
+            transform: translate3d(0, 105vh, 0) rotate(0deg) scale(0.6);
+            opacity: 0;
+          }
+          15% {
+            opacity: var(--p-op, 0.5);
+            transform: translate3d(8px, 85vh, 0) rotate(25deg) scale(1);
+          }
+          85% {
+            opacity: var(--p-op, 0.5);
+            transform: translate3d(-10px, 15vh, 0) rotate(140deg) scale(1.05);
+          }
+          100% {
+            transform: translate3d(0, -10vh, 0) rotate(180deg) scale(0.6);
+            opacity: 0;
+          }
+        }
+        .gpu-particle {
+          will-change: transform, opacity;
+          animation: floatUpGPU linear infinite;
+        }
+      `}</style>
+
       {particles.map((p) => (
-        <motion.div
+        <span
           key={p.id}
-          initial={{ y: '105vh', opacity: 0, scale: 0.5, rotate: 0 }}
-          animate={{
-            y: '-10vh',
-            opacity: [0, p.opacity, p.opacity * 0.9, 0],
-            scale: [0.5, 1, 1.1, 0.6],
-            rotate: [0, 45, 90, 180],
-            x: [`${p.x}%`, `${p.x + p.xOffset}%`]
-          }}
-          transition={{
-            duration: p.duration,
-            repeat: Infinity,
-            delay: p.delay,
-            ease: 'linear'
-          }}
-          className="absolute select-none text-rose-200/70 drop-shadow-[0_0_8px_rgba(244,114,182,0.4)]"
-          style={{ left: `${p.x}%`, fontSize: `${p.size}px` }}
+          className="gpu-particle absolute select-none text-rose-200/70"
+          style={
+            {
+              left: p.left,
+              fontSize: p.size,
+              animationDuration: p.duration,
+              animationDelay: p.delay,
+              '--p-op': p.opacity
+            } as React.CSSProperties
+          }
         >
           {p.symbol}
-        </motion.div>
+        </span>
       ))}
     </div>
   );
 };
 
 export default ParticleBackground;
-
